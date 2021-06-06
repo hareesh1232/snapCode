@@ -1,0 +1,22 @@
+int Solution::findMedian(vector<vector<int> > &A) {
+    int rows=A.size(),cols=A[0].size(),min=A[0][cols-1],max=A[0][0],dc=1+rows*cols/2;
+    for(int i=0;i<rows;i++)
+    {
+        if(min>=A[i][0])
+        min=A[i][0];
+        if(max<=A[i][cols-1])
+        max=A[i][cols-1];
+    }
+    while(min<max)
+    {
+        int mid = min + (max - min) / 2;
+        int count=0;
+        for (int i = 0; i < rows; ++i)
+            count += upper_bound(&A[i][0], &A[i][cols], mid) - &A[i][0];
+        if (count < dc)
+            min = mid + 1;
+        else
+            max = mid;
+    }
+    return min;
+}
